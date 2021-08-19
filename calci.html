@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Calculator</title>
+
+</head>
+<link rel="stylesheet" href="style.css">
+
+<body>
+
+    <div class="calculator-area">
+
+        <div>
+            <h1 class="heading">CALCULATOR</h1>
+        </div>
+
+        <div class="display-container">
+            <p id="display"> </p>
+        </div>
+
+        <div class="keyboard-container">
+
+            <div id="button-clear" data-value="ac" class="button">
+                AC
+
+            </div>
+            <div id="button-sign" data-value="sign"  class="button">
+                +/-
+
+            </div>
+            <div id="button-percent" data-value="%"  class="button">
+                %
+
+            </div>
+            <div id="button-divide" data-value="/" class="button bgred">
+                /
+
+            </div>
+
+
+
+            <div id="button-seven" data-value="7"  class="button">
+                7
+
+            </div>
+            <div id="button-eight" data-value="8"  class="button">
+                8
+
+            </div>
+
+            <div id="button-nine" data-value="9"  class="button">
+                9
+
+            </div>
+            <div id="button-multiply" data-value="*" class="button bgred">
+                *
+
+            </div>
+
+
+
+            <div id="button-four" data-value="4"  class="button">
+                4
+
+            </div>
+            <div id="button-five" data-value="5"  class="button">
+                5
+
+            </div>
+            <div id="button-six" data-value="6"  class="button">
+                6
+
+            </div>
+            <div id="button-subtract" data-value="-" class="button bgred">
+                -
+
+            </div>
+
+
+
+            <div id="button-one" data-value="1"  class="button">
+                1
+
+            </div>
+            <div id="button-two" data-value="2"  class="button">
+                2
+
+            </div>
+            <div id="button-three" data-value="3"  class="button">
+                3
+
+
+            </div>
+            <div id="button-add" data-value="+"  class="button bgred">
+                +
+
+            </div>
+
+
+
+
+            <div id="button-zero" data-value="0" class="button large-button">
+                0
+
+            </div>
+
+            <div id="button-decimal" data-value="."  class="button">
+                .
+
+            </div>
+
+
+            <div id="button-equal" data-value="=" class="button bgred">
+                =
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        var buttons = document.getElementsByClassName("button");
+        var display = document.getElementById("display");
+
+        // display.textContent = 0;
+        var operand1 = 0;
+        var operand2 = null;
+        var operator = null;
+
+        function isOperator(value) {
+            return value == "+" || value == "-" || value == "*" || value == "/";
+        }
+
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener('click', function () {
+
+               
+                var value = this.getAttribute('data-value');
+                var text = display.textContent.trim();
+
+                if (isOperator(value)) {
+                    operator = value;
+                    operand1 = parseFloat(text);
+                    display.textContent = "";
+                } else if (value == "ac") {
+                    display.textContent = "";
+                } else if (value == "sign") {
+                    operand1 = parseFloat(text);
+                    operand1 = -1 * operand1;
+                    display.textContent = operand1;
+                } else if (value == ".") {
+                    if (text.length && !text.includes('.')) {
+                        display.textContent = text + '.';
+                    }
+                } else if (value == "%") {
+                    operand1 = parseFloat(text);
+                    operand1 = operand1 / 100;
+                    display.textContent = operand1
+                } else if (value == "=") {
+                    operand2 = parseFloat(text);
+                    var result = eval(operand1 + ' ' + operator + ' ' + operand2);
+                    if (result) {
+                        display.textContent = result;
+                        operand1 = result;
+                        operand2 = null;
+                        operator = null;
+                    }
+                } else {
+                    display.textContent += value;
+                }
+            });
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>
